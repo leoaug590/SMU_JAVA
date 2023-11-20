@@ -7,6 +7,7 @@ import com.market.bookitem.Book;
 import com.market.cart.Cart;
 import com.market.member.Admin;
 import com.market.member.User;
+import com.market.exception.CartException;
 
 public class Welcome {
 	static final int NUM_BOOK = 3;
@@ -39,45 +40,55 @@ public class Welcome {
 			
 			menuIntroduction();
 			
-			System.out.print("메뉴 번호를 선택해주세요 : ");
-			int n = input.nextInt();
-			
-			if (n < 1 || n > 9) {
-				System.out.println("1부터 9까지의 숫자를 입력하세요.");
-			}
-			else {
-				switch (n) {
-				case 1:
-					menuGuestInfo(userName, userMobile);
-					break;
-				case 2:
-					menuCartItemList();
-					break;
-				case 3:
-					menuCartClear();
-					break;
-				case 4:
-					menuCartAddItem(mBookList);
-					break;
-				case 5:
-					menuCartRemoveItemCount();
-					break;
-				case 6:
-					menuCartRemoveItem();
-					break;
-				case 7:
-					menuCartBill();
-					break;
-				case 8:
-					menuExit();
-					quit = true;
-					break;
-				case 9:
-					menuAdminLogin();
-					break;
-				default:
-					break;
+			try {
+				System.out.print("메뉴 번호를 선택해주세요 : ");
+				int n = input.nextInt();
+				
+				if (n < 1 || n > 9) {
+					System.out.println("1부터 9까지의 숫자를 입력하세요.");
 				}
+				else {
+					switch (n) {
+					case 1:
+						menuGuestInfo(userName, userMobile);
+						break;
+					case 2:
+						menuCartItemList();
+						break;
+					case 3:
+						menuCartClear();
+						break;
+					case 4:
+						menuCartAddItem(mBookList);
+						break;
+					case 5:
+						menuCartRemoveItemCount();
+						break;
+					case 6:
+						menuCartRemoveItem();
+						break;
+					case 7:
+						menuCartBill();
+						break;
+					case 8:
+						menuExit();
+						quit = true;
+						break;
+					case 9:
+						menuAdminLogin();
+						break;
+					default:
+						break;
+					}
+				}
+			}
+			catch(CartException e) {
+				System.out.println(e.getMessage());
+				quit = true;
+			}
+			catch(Exception e) {
+				System.out.println("올바르지 않은 메뉴 선택으로 종료합니다");
+				quit = true;
 			}
 		}
 	}
@@ -102,9 +113,9 @@ public class Welcome {
 		}
 	}
 	
-	public static void menuCartClear() {
-		if (mCart.mCartCount == 0) {			
-			System.out.println("장바구니에 항목이 없습니다");
+	public static void menuCartClear() throws CartException {
+		if (mCart.mCartCount == 0) {
+			throw new CartException("장바구니에 항목이 없습니다");
 		}
 		else {
 			System.out.print("장바구니의 모든 항목을 삭제하겠습니까? Y | N : ");
@@ -164,9 +175,9 @@ public class Welcome {
 		System.out.println("장바구니의 항목 수량 줄이기");
 	}
 	
-	public static void menuCartRemoveItem() {
+	public static void menuCartRemoveItem() throws CartException {
 		if (mCart.mCartCount == 0) {
-			System.out.println("장바구니에 항목이 없습니다");
+			throw new CartException("장바구니에 항목이 없습니다");
 		}
 		else {
 			menuCartItemList();
@@ -202,9 +213,9 @@ public class Welcome {
 		}
 	}
 	
-	public static void menuCartBill() {
+	public static void menuCartBill() throws CartException {
 		if (mCart.mCartCount == 0) {
-			System.out.println("장바구니에 항목이 없습니다."); 
+			throw new CartException("장바구니에 항목이 없습니다");
 		}
 		else {
 			System.out.print("배송받을 분은 고객 정보와 같습니까? Y | N : ");
