@@ -195,16 +195,17 @@ public class Welcome {
 					}
 					quit = true;
 				}
-				else
+				else {
 					System.out.println("다시 입력해 주세요");
+				}	
 			}
 		}
 	}
 	
 	public static void menuCartBill() {
-		//System.out.println("7. 영수증 표시하기");
-		if (mCart.mCartCount == 0) { System.out.println("장바구니에 항목이 없습니다."); }
-		
+		if (mCart.mCartCount == 0) {
+			System.out.println("장바구니에 항목이 없습니다."); 
+		}
 		else {
 			System.out.print("배송받을 분은 고객 정보와 같습니까? Y | N : ");
 			Scanner input = new Scanner(System.in);
@@ -270,8 +271,9 @@ public class Welcome {
 			System.out.println("이름 : " + admin.getName() + "   연락처 : " + admin.getPhone());
 			System.out.println("아이디 : " + admin.getId() + "   비밀번호 : " + admin.getPassword());	
 		}
-		else
+		else {
 			System.out.println("관리자 정보가 일치하지 않습니다.");
+		}
 	}
 	
 	public static void BookList(Book[] booklist) {
