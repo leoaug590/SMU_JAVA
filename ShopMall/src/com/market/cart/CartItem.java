@@ -1,6 +1,8 @@
-/*
+package com.market.cart;
+
+import com.market.bookitem.Book;
+
 public class CartItem {
-	//private String[] itemBook = new String[7];
 	private Book itemBook;
 	private String bookID;
 	private int quantity;
@@ -8,21 +10,6 @@ public class CartItem {
 	
 	public CartItem() {
 		
-	}
-	
-	public CartItem(String[] book) {
-		this.itemBook = book;
-		this.bookID = book[0];
-		this.quantity = 1;
-		updateTotalPrice();
-	}
-	
-	public String[] getItemBook() {
-		return itemBook;
-	}
-	
-	public void setItemBook(String[] itemBook) {
-		this.itemBook = itemBook;
 	}
 	
 	public CartItem(Book booklist) {
@@ -71,4 +58,3 @@ public class CartItem {
 		totalPrice = this.itemBook.getUnitPrice() * this.quantity;
 	}
 }
-*/

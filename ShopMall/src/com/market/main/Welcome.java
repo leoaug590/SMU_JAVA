@@ -1,16 +1,21 @@
-/*
+package com.market.main;
+
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import com.market.bookitem.Book;
+import com.market.cart.Cart;
+import com.market.member.Admin;
+import com.market.member.User;
 
 public class Welcome {
 	static final int NUM_BOOK = 3;
 	static final int NUM_ITEM = 7;
-	//static CartItem[] mCartItem = new CartItem[NUM_BOOK];
-	//static int mCartCount = 0;
+
 	static Cart mCart = new Cart();
 	static User mUser;
 	
 	public static void main(String[] args) {
-		//String[][] mBook = new String[NUM_BOOK][NUM_ITEM];
 		Book[] mBookList = new Book[NUM_BOOK];
 		
 		Scanner input = new Scanner(System.in);
@@ -88,9 +93,6 @@ public class Welcome {
 	
 	public static void menuGuestInfo(String name, int mobile) {
 		System.out.println("현재 고객 정보 : ");
-		//System.out.println("이름 : " + name + " 연락처 " + mobile);
-		//Person person = new Person(name, mobile);
-		//System.out.println("이름 : " + person.getName() + " 연락처 " + person.getPhone());
 		System.out.println("이름 : " + mUser.getName() + "   연락처 : " + mUser.getPhone());
 	}
 	
@@ -105,7 +107,7 @@ public class Welcome {
 			System.out.println("장바구니에 항목이 없습니다");
 		}
 		else {
-			System.out.println("장바구니의 모든 항목을 삭제하겠습니까? Y | N ");
+			System.out.print("장바구니의 모든 항목을 삭제하겠습니까? Y | N : ");
 			Scanner input = new Scanner(System.in);
 			String str = input.nextLine();
 			
@@ -140,7 +142,7 @@ public class Welcome {
 			}
 			
 			if (flag) {
-				System.out.print("장바구니에 추가하겠습니까? Y | N ");
+				System.out.print("장바구니에 추가하겠습니까? Y | N : ");
 				str = input.nextLine();
 				
 				if (str.toUpperCase().equals("Y")) {
@@ -159,7 +161,7 @@ public class Welcome {
 	}
 	
 	public static void menuCartRemoveItemCount() {
-		System.out.println("5. 장바구니의 항목 수량 줄이기");
+		System.out.println("장바구니의 항목 수량 줄이기");
 	}
 	
 	public static void menuCartRemoveItem() {
@@ -185,7 +187,7 @@ public class Welcome {
 				}
 				
 				if (flag) {
-					System.out.print("장바구니의 항목을 삭제하시겠습니까? Y | N ");
+					System.out.print("장바구니의 항목을 삭제하시겠습니까? Y | N : ");
 					str = input.nextLine();
 					if (str.toUpperCase().equals("Y")) {
 						System.out.println(mCart.mCartItem[numId].getBookID() + " 장바구니에서 도서가 삭제되었습니다.");
@@ -200,11 +202,57 @@ public class Welcome {
 	}
 	
 	public static void menuCartBill() {
-		System.out.println("7. 영수증 표시하기");
+		//System.out.println("7. 영수증 표시하기");
+		if (mCart.mCartCount == 0) { System.out.println("장바구니에 항목이 없습니다."); }
+		
+		else {
+			System.out.print("배송받을 분은 고객 정보와 같습니까? Y | N : ");
+			Scanner input = new Scanner(System.in);
+			String str = input.nextLine();
+			
+			if (str.toUpperCase().equals("Y")) {
+				System.out.print("배송지를 입력해주세요 : ");
+				String address = input.nextLine();
+				
+				printBill(mUser.getName(), String.valueOf(mUser.getPhone()), address);
+			}
+			
+			else {
+				System.out.print("배송받을 고객명을 입력하세요 : ");
+				String name = input.nextLine();
+				System.out.print("배송받을 고객의 연락처를 입력하세요 : ");
+				String phone = input.nextLine();
+				System.out.print("배송받을 고객의 배송지를 입력하세요 : ");
+				String address = input.nextLine();
+				printBill(name, phone, address);
+			}
+		}
+	}
+	
+	public static void printBill(String name, String phone, String address) {
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		String strDate = formatter.format(date);
+		System.out.println();
+		System.out.println("-----------------배송받을 고객 정보-----------------");
+		System.out.println("고객명 : " + name + "   \t\t연락처 : " + phone);
+		System.out.println("배송지 : " + address + "\t\t발송일 : " + strDate);
+		
+		mCart.printCart();
+		
+		int sum = 0;
+		for (int i = 0; i < mCart.mCartCount; i++) {
+			sum += mCart.mCartItem[i].getTotalPrice();
+		}
+		
+		System.out.println("\t\t\t  주문 총금액 : " + sum + "원");
+		System.out.println("-----------------------------------------------");
+		System.out.println();
+		
 	}
 	
 	public static void menuExit() {
-		System.out.println("8. 종료");
+		System.out.println("프로그램을 종료합니다");
 	}
 	
 	public static void menuAdminLogin() {
@@ -250,4 +298,3 @@ public class Welcome {
 		return mCart.isCartInBook(bookId);
 	}
 }
-*/

@@ -1,4 +1,5 @@
-/*
+package com.market.bookitem;
+
 public class Book extends Item {
 	private String author;
 	private String description;
@@ -39,4 +40,3 @@ public class Book extends Item {
 	public String getReleaseDate() { return releaseDate; }
 	public void setReleaseDate(String releaseDate) { this.releaseDate = releaseDate; }
 }
-*/

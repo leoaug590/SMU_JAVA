@@ -1,4 +1,5 @@
-/*
+package com.market.member;
+
 public class Person {
 	private String name;
 	private int phone;
@@ -22,4 +23,4 @@ public class Person {
 	public String getAddress() { return address; }
 	public void setAddress(String address) { this.address = address; }
 }
-*/
+

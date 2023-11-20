@@ -1,4 +1,5 @@
-/*
+package com.market.bookitem;
+
 public abstract class Item {
 	String bookId;
 	String name;
@@ -17,4 +18,3 @@ public abstract class Item {
 	abstract void setname(String name);
 	abstract void setUnitPrice(int unitPrice);
 }
-*/
