@@ -12,6 +12,7 @@ import com.market.cart.Cart;
 import com.market.member.Admin;
 import com.market.member.User;
 import com.market.exception.CartException;
+import java.util.ArrayList;
 
 public class Welcome {
 	static final int NUM_BOOK = 3;
@@ -22,7 +23,7 @@ public class Welcome {
 
 	public static void main(String[] args) {
 
-		Book[] mBookList;
+		ArrayList<Book> mBookList;
 		int mTotalBook = 0;
 
 		Scanner input = new Scanner(System.in);
@@ -40,9 +41,9 @@ public class Welcome {
 		boolean quit = false;
 
 		while (!quit) {
-			System.out.println("***********************************************");
-			System.out.println("\t" + greeting);
-			System.out.println("\t" + tagline);
+			System.out.println("*******************************************************");
+			System.out.println("\t\t" + greeting);
+			System.out.println("\t\t" + tagline);
 
 			menuIntroduction();
 
@@ -66,7 +67,7 @@ public class Welcome {
 						break;
 					case 4:
 						mTotalBook = totalFileToBookList();
-						mBookList = new Book[mTotalBook];
+						mBookList = new ArrayList<Book>();
 						menuCartAddItem(mBookList);
 						break;
 					case 5:
@@ -100,13 +101,13 @@ public class Welcome {
 	}
 
 	public static void menuIntroduction() {
-		System.out.println("***********************************************");
-		System.out.println("1. 고객 정보 확인하기\t6. 장바구니의 항목 삭제하기");
-		System.out.println("2. 장바구니 상품 목록보기\t7. 영수증 표시하기");
-		System.out.println("3. 장바구니 비우기	\t8. 종료");
-		System.out.println("4. 바구니에 항목 추가하기\t9. 관리자 로그인");
-		System.out.println("5. 장바구니의 항목 수량 줄이기");
-		System.out.println("***********************************************");
+		System.out.println("*******************************************************");
+		System.out.println("  1. 고객 정보 확인하기\t\t6. 장바구니의 항목 삭제하기");
+		System.out.println("  2. 장바구니 상품 목록보기\t\t7. 영수증 표시하기");
+		System.out.println("  3. 장바구니 비우기\t\t8. 종료");
+		System.out.println("  4. 바구니에 항목 추가하기\t\t9. 관리자 로그인");
+		System.out.println("  5. 장바구니의 항목 수량 줄이기");
+		System.out.println("*******************************************************");
 	}
 
 	public static void menuGuestInfo(String name, int mobile) {
@@ -135,7 +136,7 @@ public class Welcome {
 		}
 	}
 
-	public static void menuCartAddItem(Book[] booklist) {
+	public static void menuCartAddItem(ArrayList<Book> booklist) {
 		BookList(booklist);
 		mCart.printBookList(booklist);
 
@@ -151,8 +152,8 @@ public class Welcome {
 			boolean flag = false;
 			int numId = -1;
 
-			for (int i = 0; i < NUM_BOOK; i++) {
-				if (str.equals(booklist[i].getBookId())) {
+			for (int i = 0; i < booklist.size(); i++) {
+				if (str.equals(booklist.get(i).getBookId())) {
 					numId = i;
 					flag = true;
 					break;
@@ -162,10 +163,10 @@ public class Welcome {
 				System.out.print("장바구니에 추가하겠습니까? Y | N : ");
 				str = input.nextLine();
 				if (str.toUpperCase().equals("Y")) {
-					System.out.println(booklist[numId].getBookId() + " 도서가 장바구니에 추가되었습니다");
+					System.out.println(booklist.get(numId).getBookId() + " 도서가 장바구니에 추가되었습니다\n");
 
-					if (!isCartInBook(booklist[numId].getBookId())) {
-						mCart.insertBook(booklist[numId]);
+					if (!isCartInBook(booklist.get(numId).getBookId())) {
+						mCart.insertBook(booklist.get(numId));
 					}
 				}
 				quit = true;
@@ -194,7 +195,7 @@ public class Welcome {
 				int numId = -1;
 
 				for (int i = 0; i < mCart.mCartCount; i++) {
-					if (str.equals(mCart.mCartItem[i].getBookID())) {
+					if (str.equals(mCart.mCartItem.get(i).getBookID())) {
 						numId = i;
 						flag = true;
 						break;
@@ -202,11 +203,11 @@ public class Welcome {
 				}
 
 				if (flag) {
-					System.out.println("장바구니의 항목을 삭제하시겠습니까? Y | N : ");
+					System.out.print("장바구니의 항목을 삭제하시겠습니까? Y | N : ");
 					str = input.nextLine();
 					if (str.toUpperCase().equals("Y")) {
 
-						System.out.println(mCart.mCartItem[numId].getBookID() + " 장바구니에서 도서가 삭제되었습니다");
+						System.out.println(mCart.mCartItem.get(numId).getBookID() + " 장바구니에서 도서가 삭제되었습니다\n");
 						mCart.removeCart(numId);
 					}
 					quit = true;
@@ -310,27 +311,28 @@ public class Welcome {
 			System.out.println("관리자 정보가 일치하지 않습니다.");
 	}
 
-	public static void BookList(Book[] booklist) {
+	public static void BookList(ArrayList<Book> booklist) {
 		setFileToBookList(booklist);
 	}
 
 	public static void printBill(String name, String phone, String address) {
+		
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		String strDate = formatter.format(date);
 		System.out.println();
-		System.out.println("-----------------배송받을 고객 정보-----------------");
+		System.out.println("---------------------배송받을 고객 정보---------------------");
 		System.out.println("고객명 : " + name + "   \t\t연락처 : " + phone);
 		System.out.println("배송지 : " + address + "\t\t발송일 : " + strDate);
 		mCart.printCart();
 
 		int sum = 0;
 		for (int i = 0; i < mCart.mCartCount; i++) {
-			sum += mCart.mCartItem[i].getTotalPrice();
+			sum += mCart.mCartItem.get(i).getTotalPrice();
 		}
 
-		System.out.println("\t\t\t  주문 총금액 : " + sum + "원");
-		System.out.println("----------------------------------------------");
+		System.out.println("\t\t\t\t  주문 총금액 : " + sum + "원");
+		System.out.println("-------------------------------------------------------");
 		System.out.println();
 	}
 
@@ -359,14 +361,13 @@ public class Welcome {
 		return 0;
 	}
 
-	public static void setFileToBookList(Book[] booklist) {
+	public static void setFileToBookList(ArrayList<Book> booklist) {
 		try {
 			FileReader fr = new FileReader("book.txt");
 			BufferedReader reader = new BufferedReader(fr);
 
 			String str2;
 			String[] readBook = new String[7];
-			int count = 0;
 
 			while ((str2 = reader.readLine()) != null) {
 
@@ -380,8 +381,9 @@ public class Welcome {
 					readBook[6] = reader.readLine();
 				}
 
-				booklist[count++] = new Book(readBook[0], readBook[1], Integer.parseInt(readBook[2]), readBook[3],
+				Book bookitem = new Book(readBook[0], readBook[1], Integer.parseInt(readBook[2]), readBook[3],
 						readBook[4], readBook[5], readBook[6]);
+				booklist.add(bookitem);
 			}
 
 			reader.close();
