@@ -170,6 +170,7 @@ public class Welcome {
 					}
 				}
 				quit = true;
+				
 			} 
 			else {
 				System.out.println("다시 입력해 주세요");
@@ -389,7 +390,8 @@ public class Welcome {
 			reader.close();
 			fr.close();
 
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println(e);
 		}
 	}
