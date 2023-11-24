@@ -3,7 +3,7 @@ package com.market.cart;
 import java.util.ArrayList;
 import com.market.bookitem.Book;
 
-public class Cart implements CartInterface {
+public class Cart implements CartInterface { 
 	public ArrayList<CartItem> mCartItem = new ArrayList<CartItem>();
 
 	public static int mCartCount = 0;
@@ -41,7 +41,7 @@ public class Cart implements CartInterface {
 		System.out.println("-------------------------------------------------------");
 		System.out.println("  도서ID \t\t\t|      수량 \t|     합계");
 
-		for (int i = 0; i < mCartItem.size(); i++) { // 13
+		for (int i = 0; i < mCartItem.size(); i++) {
 			System.out.print("  " + mCartItem.get(i).getBookID() + " \t|     ");
 			System.out.print("  " + mCartItem.get(i).getQuantity() + " \t|   ");
 			System.out.print("  " + mCartItem.get(i).getTotalPrice());

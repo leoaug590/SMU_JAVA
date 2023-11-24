@@ -181,7 +181,7 @@ public class Welcome {
 		System.out.println("장바구니의 항목 수량 줄이기");
 	}
 
-	public static void menuCartRemoveItem() throws CartException {
+	public static void menuCartRemoveItem() throws CartException { 
 		if (mCart.mCartCount == 0)
 			throw new CartException("장바구니에 항목이 없습니다");
 		else {

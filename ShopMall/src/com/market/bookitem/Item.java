@@ -1,6 +1,6 @@
 package com.market.bookitem;
 
-public abstract class Item {
+public abstract class Item { 
 	String bookId;
 	String name;
 	int unitPrice;

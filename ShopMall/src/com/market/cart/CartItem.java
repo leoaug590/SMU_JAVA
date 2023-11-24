@@ -2,7 +2,7 @@ package com.market.cart;
 
 import com.market.bookitem.Book;
 
-public class CartItem {
+public class CartItem { 
 
 	private Book itemBook;
 	private String bookID;
@@ -10,7 +10,7 @@ public class CartItem {
 	private int totalPrice;
 
 	public CartItem() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public CartItem(Book booklist) {
