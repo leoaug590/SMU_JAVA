@@ -1,6 +1,6 @@
 package com.market.bookitem;
 
-public class Book extends Item { 
+public class Book extends Item {  
 	private String author;
 	private String description;
 	private String category;
